@@ -11,9 +11,9 @@ db.init_app(app)
 
 #create tables
 #once tables created comment it.
-with app.app_context():
+"""with app.app_context():
     db.create_all()
-    print("Tables created!")
+    print("Tables created!")"""
 
 @app.route('/')
 def home():
