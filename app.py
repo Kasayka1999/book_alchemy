@@ -29,9 +29,14 @@ def add_author():
     birthdate = request.form.get('birthdate') #return string
     date_of_death = request.form.get('date_of_death') #return string
 
-    # convert strings to dates
+    # convert birthdate to python obj dates
     birth_date_obj = datetime.strptime(birthdate, "%Y-%m-%d").date()
-    death_date_obj = datetime.strptime(date_of_death, "%Y-%m-%d").date()
+
+    # Convert death date if provided
+    death_date_obj = None
+    if date_of_death:
+        death_date_obj = datetime.strptime(date_of_death, "%Y-%m-%d").date()
+
 
     author = Author(
             name = name,

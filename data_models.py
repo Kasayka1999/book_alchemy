@@ -7,7 +7,7 @@ class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
     birth_date = db.Column(db.Date)
-    date_of_death = db.Column(db.Date)
+    date_of_death = db.Column(db.Date, nullable=True)
 
     def __str__(self):
         return self.name
