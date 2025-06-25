@@ -52,6 +52,35 @@ def add_author():
     )
 
 
+@app.route('/add_book', methods=['GET', 'POST'])
+def add_book():
+    if request.method == 'GET':
+        authors = Author.query.all()
+        return render_template('add_book.html', authors=authors)
+    else:
+        title = request.form.get('name')
+        isbn = request.form.get('isbn')
+        publication_year = request.form.get('publication_year')
+        author_id = request.form.get('author_id')
+
+        #covert str date to obj date
+        publication_year_obj = datetime.strptime(publication_year, "%Y-%m-%d").date()
+
+        book = Book(
+            title = title,
+            isbn = isbn,
+            publication_year = publication_year_obj,
+            author_id = author_id
+        )
+
+        db.session.add(book)
+        db.session.commit()
+
+        return render_template(
+            "add_book.html",
+            message=f'Book "{title}" added'
+        )
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5001, debug=True)
