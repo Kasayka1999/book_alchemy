@@ -24,6 +24,9 @@ class Book(db.Model):
     publication_year = db.Column(db.Date)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'))
 
+    #This line is required for book.author to work
+    author = db.relationship('Author', backref='books')
+
     def __str__(self):
         return self.title
 
