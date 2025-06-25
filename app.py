@@ -41,7 +41,10 @@ def add_author():
 
     db.session.add(author)
     db.session.commit()
-    return f"Author added: {name}, {birthdate}, {date_of_death}"
+    return render_template(
+        "add_author.html",
+        message=f"Author added with name: {name}, Birth Date: {birthdate}"
+    )
 
 
 
