@@ -76,9 +76,12 @@ def add_book():
         db.session.add(book)
         db.session.commit()
 
+        #re-query authors for the form
+        authors = Author.query.all()
+
         return render_template(
             "add_book.html",
-            message=f'Book "{title}" added'
+            message=f'Book "{title}" added', authors=authors
         )
 
 
