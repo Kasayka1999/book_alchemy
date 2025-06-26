@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
+    <div class="sort-container">
+      <label for="sort">Sort by:</label>
+      <select id="sort" onchange="location = this.value;">
+        <option value="/?sort=title">Title</option>
+        <option value="/?sort=author">Author</option>
+      </select>
+    </div>
    <div class="book-grid">
       {% for book in books %}
         <div class="book-card">

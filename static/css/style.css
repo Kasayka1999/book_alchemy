@@ -35,3 +35,24 @@
     color: #555;
     margin: 0;
 }
+.sort-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 20px;
+  gap: 10px;
+}
+
+.sort-container label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.sort-container select {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
