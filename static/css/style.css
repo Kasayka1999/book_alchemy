@@ -1,0 +1,37 @@
+.book-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    padding: 20px;
+}
+.book-card {
+    width: 220px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+}
+.book-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+.book-card h3 {
+    font-size: 16px;
+    margin: 10px 0 4px;
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.4;
+}
+.book-card p {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
