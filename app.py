@@ -25,7 +25,7 @@ def home():
     else:
         books = Book.query.order_by(Book.title).all()
 
-    return render_template('home.html', books=books)
+    return render_template('home.html', books=books, sort_by=sort_by)
 @app.route('/add_author', methods=['GET','POST'])
 def add_author():
   if request.method == "GET":

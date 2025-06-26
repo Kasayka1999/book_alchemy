@@ -10,8 +10,8 @@
     <div class="sort-container">
       <label for="sort">Sort by:</label>
       <select id="sort" onchange="location = this.value;">
-        <option value="/?sort=title">Title</option>
-        <option value="/?sort=author">Author</option>
+        <option value="/?sort=title" {% if sort_by == 'title' %}selected="selected"{% endif %}>Title</option>
+        <option value="/?sort=author" {% if sort_by == 'author' %}selected="selected"{% endif %}>Author</option>
       </select>
     </div>
    <div class="book-grid">
