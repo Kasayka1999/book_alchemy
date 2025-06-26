@@ -22,12 +22,16 @@
       </form>
     </div>
     </div>
+  {% if deleted_successfully %}
+  <p style="color: green;">{{ deleted_successfully }}</p>
+  {% endif %}
    <div class="book-grid">
       {% for book in books %}
         <div class="book-card">
           <img src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-L.jpg" alt="Book Cover">
           <h3>{{ book.title }}</h3>
           <p>{{ book.author.name }}</p>
+          <div class="delete-btn-container"><form action="/book/{{ book.id }}/delete" method="post"><button class="delete-btn" type="submit">Delete</button></form></div>
         </div>
       {% endfor %}
     </div>

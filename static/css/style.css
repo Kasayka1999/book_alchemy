@@ -59,36 +59,49 @@
     cursor: pointer;
 }
 .search-container {
-  display: flex;
-  align-items: center;
-  margin: 20px;
+    display: flex;
+    align-items: center;
+    margin: 20px;
 }
 
 .search-container form {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .search-container input[type="text"] {
-  padding: 8px 12px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 200px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
 }
 
 .search-container button {
-  padding: 8px 16px;
-  background-color: #0066cc;
-  color: white;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+    padding: 8px 16px;
+    background-color: #0066cc;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .search-container button:hover {
-  background-color: #004999;
+    background-color: #004999;
+}
+.delete-btn {
+    padding: 8px 16px;
+    background-color: #cc5f00;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+button.delete-btn {
+    margin-top: 20px;
 }

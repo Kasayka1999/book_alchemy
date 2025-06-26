@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if deleted_successfully %}
+  <p style="color: green;">{{ deleted_successfully }}</p>
+  {% endif %}
+{% for author, count in authors %}
+  <p>{{ author.name }} — {{ count }} book(s)</p>
+  <form action="/authors/{{ author.id }}/delete" method="post"><button class="delete-btn" type="submit">Delete</button></form>
+{% endfor %}
+</body>
+</html>
