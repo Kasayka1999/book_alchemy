@@ -9,7 +9,7 @@
   <body>
   {% include 'navbar.html' %}
   {% if deleted_successfully %}
-  <p style="color: green;">{{ deleted_successfully }}</p>
+  <div class="form-message">{{ deleted_successfully }}</div>
   {% endif %}
    <div class="book-grid">
       {% for book in books %}
