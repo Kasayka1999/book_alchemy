@@ -2,15 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
 <body>
-{% if deleted_successfully %}
-  <p style="color: green;">{{ deleted_successfully }}</p>
+<div class="container">
+  <div class="author-list-section">
+  {% if deleted_successfully %}
+    <div class="message">{{ deleted_successfully }}</div>
   {% endif %}
-{% for author, count in authors %}
-  <p>{{ author.name }} — {{ count }} book(s)</p>
-  <form action="/authors/{{ author.id }}/delete" method="post"><button class="delete-btn" type="submit">Delete</button></form>
-{% endfor %}
+
+  {% for author, count in authors %}
+    <div class="author">
+      <div class="author-info">
+        <div class="author-name">{{ author.name }}</div>
+        <div class="book-count">({{ count }} book{{ 's' if count != 1 else '' }})</div>
+      </div>
+      <form action="/author/{{ author.id }}/delete" method="post">
+        <button class="delete-btn" type="submit">Delete</button>
+      </form>
+    </div>
+  {% endfor %}
+</div>
+</div>
 </body>
 </html>

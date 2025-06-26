@@ -1,3 +1,18 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f6fa;
+  padding: 20px;
+  margin: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 .book-grid {
     display: flex;
     flex-wrap: wrap;
@@ -93,15 +108,51 @@
     background-color: #004999;
 }
 .delete-btn {
-    padding: 8px 16px;
-    background-color: #cc5f00;
+    background-color: #e74c3c;
     color: white;
-    font-size: 14px;
     border: none;
+    padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
     transition: background-color 0.2s ease;
+}
+.delete-btn:hover {
+    background-color: #c0392b;
 }
 button.delete-btn {
     margin-top: 20px;
 }
+.author-list-section .message {
+    background-color: #e6ffed;
+    color: #267a3d;
+    border: 1px solid #b6e6c2;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.author-list-section .author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.author-list-section .author:last-child {
+    border-bottom: none;
+}
+
+.author-list-section .author-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.author-list-section .book-count {
+    color: #888;
+    font-size: 14px;
+    margin-left: 10px;
+}
+

@@ -123,7 +123,7 @@ def authors_list():
 
     return render_template('authors.html', authors=authors_with_count, deleted_successfully=deleted_successfully)
 
-@app.route('/authors/<int:author_id>/delete', methods=['POST'])
+@app.route('/author/<int:author_id>/delete', methods=['POST'])
 def author_delete(author_id):
     if request.method == 'POST':
         author_to_delete = Author.query.get(author_id)
