@@ -4,21 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Author</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
-  {% if message %}
-    <p style="color: green;">{{ message }}</p>
-  {% endif %}
-  <form action="/add_author" method="POST">
-  <label for="name">Author Name:</label>
-  <input type="text" id="name" name="name" required><br><br>
+    {% include 'navbar.html' %}
 
-  <label for="birthdate">Birthdate:</label>
-  <input type="date" id="birthdate" name="birthdate" required><br><br>
-  <label for="date_of_death">Date of Death:</label>
-  <input type="date" id="date_of_death" name="date_of_death"><br><br>
-  <input type="submit" value="Add Author">
-  </form>
+    <div class="container">
+      <h2>Add New Author</h2>
+      {% if message %}
+        <div class="form-message">{{ message }}</div>
+      {% endif %}
+      <form method="POST" action="/add_author" class="form-section">
+        <label for="name">Author Name:</label>
+        <input type="text" name="name" id="name" required>
 
+        <label for="birthdate">Birth Date:</label>
+        <input type="date" name="birthdate" id="birthdate" required>
+
+        <label for="date_of_death">Date of Death (optional):</label>
+        <input type="date" name="date_of_death" id="date_of_death">
+
+        <button type="submit" class="submit-btn">Add Author</button>
+      </form>
+    </div>
   </body>
 </html>

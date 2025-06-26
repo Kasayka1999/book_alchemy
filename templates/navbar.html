@@ -1,0 +1,25 @@
+<div class="navbar">
+  <div class="nav-left">
+    <a class="nav-btn {% if request.path == '/' %}active{% endif %}" href="/">Books</a>
+    <a class="nav-btn {% if request.path == '/authors' %}active{% endif %}" href="/authors">Authors</a>
+    <a class="nav-btn {% if request.path == '/add_author' %}active{% endif %}" href="/add_author">Add Author</a>
+    <a class="nav-btn {% if request.path == '/add_book' %}active{% endif %}" href="/add_book">Add Book</a>
+  </div>
+  {% if request.path == '/' %}
+  <div class="nav-right">
+    <div class="sort-container">
+      <label for="sort">Sort by:</label>
+      <select id="sort" onchange="location = this.value;">
+        <option value="/?sort=title" {% if sort_by == 'title' %}selected="selected"{% endif %}>Title</option>
+        <option value="/?sort=author" {% if sort_by == 'author' %}selected="selected"{% endif %}>Author</option>
+      </select>
+    </div>
+    <div class="search-container">
+      <form action="/" method="get">
+        <input type="text" name="search" placeholder="Search books..." value="{{ request.args.get('search', '') }}">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+</div>
