@@ -1,5 +1,8 @@
 from flask import Flask, render_template, abort
-from players import SQUAD, STAFF, TEAM_INFO, total_players, get_player
+from players import (
+    SQUAD, STAFF, TEAM_INFO, RECENT_MATCHES, LEAGUE_TABLE,
+    PHOTO_CREDIT, TM_URL, total_players, get_player
+)
 
 app = Flask(__name__)
 
@@ -11,7 +14,11 @@ def squad():
         squad=SQUAD,
         staff=STAFF,
         team=TEAM_INFO,
+        matches=RECENT_MATCHES,
+        table=LEAGUE_TABLE,
         total=total_players(),
+        credit=PHOTO_CREDIT,
+        tm_url=TM_URL,
     )
 
 
@@ -25,6 +32,8 @@ def player_detail(player_id):
         p=player,
         group=group,
         team=TEAM_INFO,
+        credit=PHOTO_CREDIT,
+        tm_url=TM_URL,
     )
 
 

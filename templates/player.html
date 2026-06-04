@@ -2,50 +2,117 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ p.name }} — {{ team.name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0f1e">
+  <title>{{ p.name }} — Fenerbahçe SK</title>
   <link rel="icon" href="{{ url_for('static', filename='crest.svg') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fb.css') }}">
 </head>
 <body>
 
-  {% set fallback = "https://ui-avatars.com/api/?name=" ~ (p.name|urlencode) ~ "&size=256&background=14213d&color=ffd700&bold=true&font-size=0.4" %}
+{% set fallback = "https://ui-avatars.com/api/?background=0a1228&color=ffd700&bold=true&font-size=0.4&size=400&name=" ~ (p.name|urlencode) %}
 
-  <div class="detail">
-    <a class="back" href="{{ url_for('squad') }}">← Kadroya dön</a>
+<div class="detail-wrap">
 
-    <div class="detail-hero">
-      <img class="big-photo"
-           src="{{ p.photo if p.photo else fallback }}"
+  <!-- Back -->
+  <a class="back-btn" href="{{ url_for('squad') }}">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    Kadroya dön
+  </a>
+
+  <!-- Main card -->
+  <div class="detail-card">
+    <!-- Photo -->
+    <div class="detail-photo-section">
+      <img src="{{ p.photo if p.photo else fallback }}"
            alt="{{ p.name }}"
            onerror="this.onerror=null;this.src='{{ fallback }}';">
-      <div>
-        <div class="d-number">#{{ p.number }}</div>
-        <div class="d-name">{{ p.name }} {{ p.country }}</div>
-        <div class="d-role">{{ group }} · {{ p.role }}</div>
+      <div class="detail-photo-overlay"></div>
+      <div class="detail-number-bg">#{{ p.number }}</div>
+    </div>
+
+    <!-- Info -->
+    <div class="detail-info">
+      <div class="hero-badges" style="justify-content:flex-start;margin-bottom:8px;">
+        <span class="badge badge-gold">{{ p.role }}</span>
+        {% if p.get('badge') %}
+        <span class="badge badge-red">{{ p.badge }}</span>
+        {% endif %}
+      </div>
+      <div class="detail-name">{{ p.name }} {{ p.country }}</div>
+      <div class="detail-sub">
+        <span class="group">{{ group }}</span>
+        <span class="badge badge-glass" style="font-size:.66rem;">
+          🏟️ #{{ p.number }}
+        </span>
+        {% if p.get('market_value') %}
+        <span class="badge badge-glass" style="font-size:.66rem;">
+          💰 {{ p.market_value }}
+        </span>
+        {% endif %}
+      </div>
+
+      <!-- Season stats -->
+      <div class="detail-stats-row">
+        <div class="detail-stat">
+          <b>{{ p.stats.mac }}</b><span>Maç</span>
+        </div>
+        <div class="detail-stat">
+          <b>{{ p.stats.gol }}</b><span>Gol</span>
+        </div>
+        <div class="detail-stat">
+          <b>{{ p.stats.asist }}</b><span>Asist</span>
+        </div>
+      </div>
+      {% if p.stats.sari or p.stats.kirmizi %}
+      <div class="detail-stats-row" style="margin-top:8px;">
+        <div class="detail-stat">
+          <b style="color:#f59e0b;">{{ p.stats.sari }}</b><span>Sarı Kart</span>
+        </div>
+        <div class="detail-stat">
+          <b style="color:var(--red);">{{ p.stats.kirmizi }}</b><span>Kırmızı Kart</span>
+        </div>
+        <div class="detail-stat">
+          <b>{{ p.stats.mac }}</b><span>Toplam Maç</span>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Meta -->
+      <div class="detail-meta-grid">
+        <div class="meta-item">
+          <div class="m-label">Yaş</div>
+          <div class="m-value">{{ p.age }}</div>
+        </div>
+        <div class="meta-item">
+          <div class="m-label">Boy</div>
+          <div class="m-value">{{ p.height }}</div>
+        </div>
+        <div class="meta-item">
+          <div class="m-label">Tercih Ayak</div>
+          <div class="m-value">{{ p.foot }}</div>
+        </div>
+        <div class="meta-item">
+          <div class="m-label">Uyruk</div>
+          <div class="m-value">{{ p.country }} {{ p.country_name }}</div>
+        </div>
       </div>
     </div>
-
-    <div class="detail-meta">
-      <div class="meta-box"><b>{{ p.number }}</b><span>Forma No</span></div>
-      <div class="meta-box"><b>{{ p.age }}</b><span>Yaş</span></div>
-      <div class="meta-box"><b>{{ p.country }}</b><span>Uyruk</span></div>
-    </div>
-
-    <h2 class="stats-title">📊 Sezon İstatistikleri</h2>
-    <div class="stat-row">
-      <div class="stat-pill"><b>{{ p.stats.mac }}</b><span>Maç</span></div>
-      <div class="stat-pill"><b>{{ p.stats.gol }}</b><span>Gol</span></div>
-      <div class="stat-pill"><b>{{ p.stats.asist }}</b><span>Asist</span></div>
-    </div>
-    <p style="margin-top:10px;font-size:.72rem;color:#6b7280;text-align:center;">
-      İstatistikler placeholder'dır — gerçek rakamları <code>players.py</code> dosyasından güncelle.
-    </p>
   </div>
 
-  <footer>
-    <span class="heart">♥</span> ile yapıldı — Sadece Fenerbahçe.
-  </footer>
+  <!-- Photo credit -->
+  <div class="photo-credit" style="margin-top:16px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--card-bg);">
+    📸 {{ credit }} ·
+    <a href="{{ tm_url }}" target="_blank" rel="noopener">Transfermarkt</a>
+  </div>
+
+</div>
+
+<footer>
+  <span class="heart">♥</span> ile yapıldı — Sadece Fenerbahçe.
+</footer>
 
 </body>
 </html>

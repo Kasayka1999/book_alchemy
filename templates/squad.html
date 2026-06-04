@@ -2,81 +2,271 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ team.name }} — Güncel Kadro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0f1e">
+  <title>{{ team.name }} — Güncel Kadro 2025-26</title>
   <link rel="icon" href="{{ url_for('static', filename='crest.svg') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fb.css') }}">
 </head>
 <body>
 
-  <header class="hero">
-    <img class="crest-img" src="{{ url_for('static', filename='crest.svg') }}" alt="Fenerbahçe arması">
-    <h1>FENER<span class="y">BAHÇE</span></h1>
-    <div class="season">{{ team.season }}</div>
-    <div class="meta">
-      🏟️ {{ team.stadium }}<br>
-      ⭐ Kuruluş: {{ team.founded }}
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <img class="hero-logo"
+         src="{{ url_for('static', filename='crest.svg') }}"
+         alt="Fenerbahçe arması">
+    <h1 class="hero-title">FENER<span class="y">BAHÇE</span></h1>
+    <div class="hero-badges">
+      <span class="badge badge-gold">{{ team.season }} Sezonu</span>
+      <span class="badge badge-glass">🏆 Süper Kupa Şampiyonu</span>
+      <span class="badge badge-glass">🇹🇷 Süper Lig 2.</span>
     </div>
-    <div class="motto">“{{ team.motto }}”</div>
-  </header>
-
-  <div class="stats">
-    <div class="stat"><b>{{ total }}</b><span>Oyuncu</span></div>
-    <div class="stat"><b>{{ squad|length }}</b><span>Mevki</span></div>
-    <div class="stat"><b>{{ 2025 - team.founded }}</b><span>Yıllık Tarih</span></div>
+    <div class="hero-meta">
+      🏟️ {{ team.stadium }} &nbsp;·&nbsp; ⭐ Kuruluş {{ team.founded }}<br>
+      📊 Kadro değeri: {{ team.market_value }}
+    </div>
+    <div class="hero-motto">"{{ team.motto }}"</div>
   </div>
+</header>
 
-  <main>
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><b>{{ total }}</b><span>Oyuncu</span></div>
+  <div class="stat-item"><b>{{ squad|length }}</b><span>Grup</span></div>
+  <div class="stat-item"><b>{{ 2026 - team.founded }}</b><span>Yıllık Tarih</span></div>
+  <div class="stat-item"><b>{{ team.market_value }}</b><span>Kadro Değeri</span></div>
+  <div class="stat-item"><b>2.</b><span>Lig Sırası</span></div>
+</div>
+
+<!-- NAV TABS -->
+<nav class="nav-tabs" id="navTabs">
+  <button class="nav-tab active" data-tab="kadro">⚽ Kadro</button>
+  <button class="nav-tab" data-tab="maclar">📅 Son Maçlar</button>
+  <button class="nav-tab" data-tab="puan">📊 Puan Durumu</button>
+  <button class="nav-tab" data-tab="teknik">🏆 Teknik Ekip</button>
+</nav>
+
+<main>
+
+  <!-- ========================================================
+       KADRO TAB
+  ======================================================== -->
+  <div class="page-section visible" id="tab-kadro">
     {% for group in squad %}
-    <h2 class="section-title">
-      <span>{{ group.icon }}</span>
-      <span>{{ group.group }}</span>
-      <span class="count">{{ group.players|length }} oyuncu</span>
-    </h2>
+    <div class="section-header">
+      <span class="icon">{{ group.icon }}</span>
+      <h2>{{ group.group }}</h2>
+      <span class="pill">{{ group.players|length }} oyuncu</span>
+    </div>
+    <div class="section-line"></div>
 
-    <div class="grid">
+    <div class="player-grid">
       {% for p in group.players %}
-      {% set fallback = "https://ui-avatars.com/api/?name=" ~ (p.name|urlencode) ~ "&size=256&background=14213d&color=ffd700&bold=true&font-size=0.4" %}
-      <a class="card" href="{{ url_for('player_detail', player_id=p.id) }}">
+      {% set fallback = "https://ui-avatars.com/api/?background=0a1228&color=ffd700&bold=true&font-size=0.4&size=300&name=" ~ (p.name|urlencode) %}
+      <a class="player-card" href="{{ url_for('player_detail', player_id=p.id) }}">
         <div class="photo-wrap">
-          <span class="number">{{ p.number }}</span>
-          <span class="flag">{{ p.country }}</span>
+          <span class="p-number">{{ p.number }}</span>
+          <span class="p-flag">{{ p.country }}</span>
+          {% if p.get('badge') %}
+            <span class="p-badge {% if p.badge in ['⭐','🔥'] %}star{% endif %}">{{ p.badge }}</span>
+          {% endif %}
+          <div class="photo-overlay"></div>
           <img src="{{ p.photo if p.photo else fallback }}"
                alt="{{ p.name }}"
                loading="lazy"
                onerror="this.onerror=null;this.src='{{ fallback }}';">
         </div>
-        <div class="info">
-          <div class="name">{{ p.name }}</div>
-          <div class="role">{{ p.role }}</div>
-          <span class="age">{{ p.age }} yaş</span>
+        <div class="p-info">
+          <div class="p-name">{{ p.name }}</div>
+          <div class="p-role">{{ p.role }}</div>
+          <div class="p-meta">
+            <span class="p-tag">{{ p.age }} yaş</span>
+            {% if p.get('market_value') %}
+            <span class="p-tag gold">{{ p.market_value }}</span>
+            {% endif %}
+          </div>
         </div>
       </a>
       {% endfor %}
     </div>
     {% endfor %}
+  </div>
 
-    <!-- Teknik ekip & yönetim -->
-    <h2 class="section-title">
-      <span>🏆</span>
-      <span>Teknik Ekip &amp; Yönetim</span>
-      <span class="count">{{ staff|length }} kişi</span>
-    </h2>
-    <div class="staff-grid">
-      {% for s in staff %}
-      <div class="staff-card">
-        <div class="emoji">{{ s.country }}</div>
-        <div class="srole">{{ s.role }}</div>
-        <div class="sname">{{ s.name }}</div>
+  <!-- ========================================================
+       SON MAÇLAR TAB
+  ======================================================== -->
+  <div class="page-section" id="tab-maclar">
+    <div class="section-header">
+      <span class="icon">📅</span>
+      <h2>Son Maçlar</h2>
+      <span class="pill">{{ matches|length }} maç</span>
+    </div>
+    <div class="section-line"></div>
+
+    <div class="matches-list">
+      {% for m in matches %}
+      {% set cls = 'win' if m.result == 'W' else ('loss' if m.result == 'L' else 'draw') %}
+      <div class="match-row {{ cls }}">
+        <div class="match-team {% if m.home == 'Fenerbahçe' %}fb{% endif %}">
+          {{ m.home }}
+        </div>
+        <div class="match-center">
+          <div class="match-score">{{ m.score }}</div>
+          <div class="match-meta">{{ m.date }}</div>
+          <span class="match-comp">{{ m.competition }}</span>
+        </div>
+        <div class="match-team right {% if m.away == 'Fenerbahçe' %}fb{% endif %}">
+          {{ m.away }}
+          <span class="result-badge {{ m.result }}" style="margin-left:6px;">{{ m.result }}</span>
+        </div>
       </div>
       {% endfor %}
     </div>
-  </main>
+  </div>
 
-  <footer>
-    Bu sayfa eğitim/hobi amaçlı hazırlanmıştır. Kadro bilgileri değişebilir.<br>
-    <span class="heart">♥</span> ile yapıldı — Sadece Fenerbahçe.
-  </footer>
+  <!-- ========================================================
+       PUAN DURUMU TAB
+  ======================================================== -->
+  <div class="page-section" id="tab-puan">
+    <div class="section-header">
+      <span class="icon">📊</span>
+      <h2>Trendyol Süper Lig — Puan Durumu</h2>
+      <span class="pill">34. Hafta</span>
+    </div>
+    <div class="section-line"></div>
+
+    <div class="table-wrap">
+      <table class="league-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th style="text-align:left;">Takım</th>
+            <th>O</th><th>G</th><th>B</th><th>M</th>
+            <th>AG</th><th>YG</th><th>P</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in table %}
+          <tr class="{{ 'me' if row.highlight else '' }}">
+            <td>
+              <span class="table-pos {% if row.pos == 1 %}top{% elif row.highlight %}me-pos{% endif %}">
+                {{ row.pos }}
+              </span>
+            </td>
+            <td class="table-team">
+              {% if row.highlight %}⭐ {% endif %}{{ row.team }}
+            </td>
+            <td>{{ row.played }}</td>
+            <td>{{ row.won }}</td>
+            <td>{{ row.drawn }}</td>
+            <td>{{ row.lost }}</td>
+            <td>{{ row.gf }}</td>
+            <td>{{ row.ga }}</td>
+            <td class="table-pts">{{ row.pts }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:10px;font-size:.68rem;color:var(--text-muted);text-align:center;">
+      ⚠️ Tahmini veriler — resmi sonuçlar için <a href="https://www.tff.org" target="_blank" style="color:var(--gold)">TFF</a>'yi ziyaret edin.
+    </p>
+  </div>
+
+  <!-- ========================================================
+       TEKNİK EKİP TAB
+  ======================================================== -->
+  <div class="page-section" id="tab-teknik">
+    <div class="section-header">
+      <span class="icon">🏆</span>
+      <h2>Teknik Ekip &amp; Yönetim</h2>
+      <span class="pill">{{ staff|length }} kişi</span>
+    </div>
+    <div class="section-line"></div>
+
+    <div class="staff-grid">
+      {% for s in staff %}
+      {% set fallback = "https://ui-avatars.com/api/?background=0a1228&color=ffd700&bold=true&size=200&name=" ~ (s.name|urlencode) %}
+      <div class="staff-card">
+        <div class="s-avatar">
+          {% if s.photo %}
+          <img src="{{ s.photo }}" alt="{{ s.name }}"
+               onerror="this.parentElement.textContent='{{ s.country }}'">
+          {% else %}
+          {{ s.country }}
+          {% endif %}
+        </div>
+        <div class="s-info">
+          <div class="s-role">{{ s.role }}</div>
+          <div class="s-name">{{ s.name }}</div>
+          {% if s.note %}
+          <div class="s-note">{{ s.note }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</main>
+
+<!-- PHOTO CREDIT -->
+<div class="photo-credit">
+  📸 {{ credit }} ·
+  <a href="{{ tm_url }}" target="_blank" rel="noopener">Transfermarkt kadro sayfası</a>
+</div>
+
+<footer>
+  <span class="heart">♥</span> ile yapıldı — Sadece Fenerbahçe.<br>
+  Bu sayfa eğitim/test amaçlıdır. Ticari kullanım yoktur.<br>
+  Veriler: <a href="{{ tm_url }}" target="_blank" rel="noopener">Transfermarkt</a> &amp; Wikipedia (Haziran 2026)
+</footer>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sections = document.querySelectorAll('.page-section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('visible'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + target).classList.add('visible');
+      // Smooth scroll to top of content
+      document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Staggered card animation on load
+  const cards = document.querySelectorAll('.player-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationDelay = (i % 12) * 30 + 'ms';
+        entry.target.classList.add('fade-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach(c => observer.observe(c));
+</script>
+
+<style>
+  .player-card {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: none;
+  }
+  .player-card.fade-in {
+    animation: cardIn .35s ease forwards;
+  }
+  @keyframes cardIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
 
 </body>
 </html>
