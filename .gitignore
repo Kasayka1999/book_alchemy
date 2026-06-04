@@ -15,3 +15,8 @@ env/
 # Editor
 .idea/
 .vscode/
+
+# Render build'de indirilen oyuncu fotoğrafları (git'e commit edilmez)
+static/images/players/*.jpg
+static/images/players/*.png
+static/images/players/map.json
