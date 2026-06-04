@@ -4,222 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ team.name }} — Güncel Kadro</title>
-  <style>
-    :root {
-      --fb-navy: #14213d;
-      --fb-navy-2: #0a1228;
-      --fb-yellow: #ffd700;
-      --fb-yellow-soft: #ffe862;
-      --card: #ffffff;
-      --text-dark: #14213d;
-      --muted: #6b7280;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #f3f4f6;
-      color: var(--text-dark);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ---------- Header ---------- */
-    .hero {
-      background: linear-gradient(160deg, var(--fb-navy) 0%, var(--fb-navy-2) 100%);
-      color: #fff;
-      padding: 28px 18px 22px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 5px solid var(--fb-yellow);
-    }
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(135deg,
-          rgba(255,215,0,0.06) 0 14px,
-          transparent 14px 28px);
-      pointer-events: none;
-    }
-    .crest {
-      font-size: 46px;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .hero h1 {
-      font-size: 1.6rem;
-      letter-spacing: .5px;
-      font-weight: 800;
-    }
-    .hero h1 .y { color: var(--fb-yellow); }
-    .hero .season {
-      display: inline-block;
-      margin-top: 8px;
-      background: var(--fb-yellow);
-      color: var(--fb-navy);
-      font-weight: 700;
-      font-size: .8rem;
-      padding: 4px 12px;
-      border-radius: 999px;
-    }
-    .hero .meta {
-      margin-top: 12px;
-      font-size: .82rem;
-      color: #cbd5e1;
-      line-height: 1.6;
-    }
-    .hero .motto {
-      margin-top: 12px;
-      font-style: italic;
-      font-size: .8rem;
-      color: var(--fb-yellow-soft);
-    }
-
-    /* ---------- Stats bar ---------- */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 22px;
-      background: var(--fb-navy-2);
-      color: #fff;
-      padding: 12px;
-      flex-wrap: wrap;
-    }
-    .stats .stat { text-align: center; }
-    .stats .stat b { display: block; font-size: 1.25rem; color: var(--fb-yellow); }
-    .stats .stat span { font-size: .7rem; color: #cbd5e1; text-transform: uppercase; letter-spacing: .5px; }
-
-    /* ---------- Sections ---------- */
-    main { max-width: 1100px; margin: 0 auto; padding: 18px 14px 50px; }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 26px 4px 14px;
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--fb-navy);
-      border-left: 5px solid var(--fb-yellow);
-      padding-left: 10px;
-    }
-    .section-title .count {
-      margin-left: auto;
-      font-size: .75rem;
-      font-weight: 600;
-      color: var(--muted);
-      background: #fff;
-      padding: 3px 9px;
-      border-radius: 999px;
-    }
-
-    /* ---------- Grid + cards ---------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 14px;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 14px rgba(20,33,61,.08);
-      transition: transform .18s ease, box-shadow .18s ease;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-    .card:active { transform: scale(.98); }
-    @media (hover:hover) {
-      .card:hover { transform: translateY(-4px); box-shadow: 0 10px 22px rgba(20,33,61,.18); }
-    }
-
-    .card .photo-wrap {
-      position: relative;
-      background: linear-gradient(160deg, var(--fb-navy) 0%, var(--fb-navy-2) 100%);
-      aspect-ratio: 1 / 1;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .card .photo-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .card .number {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: var(--fb-yellow);
-      color: var(--fb-navy);
-      font-weight: 800;
-      font-size: .8rem;
-      min-width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,.25);
-    }
-    .card .flag {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      font-size: 1.1rem;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,.4));
-    }
-
-    .card .info {
-      padding: 10px 10px 12px;
-      text-align: center;
-    }
-    .card .name {
-      font-weight: 700;
-      font-size: .92rem;
-      color: var(--fb-navy);
-      line-height: 1.2;
-    }
-    .card .role {
-      margin-top: 4px;
-      font-size: .72rem;
-      color: var(--muted);
-    }
-    .card .age {
-      margin-top: 6px;
-      display: inline-block;
-      font-size: .68rem;
-      background: #eef2ff;
-      color: var(--fb-navy);
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px 14px 34px;
-      color: var(--muted);
-      font-size: .75rem;
-    }
-    footer .heart { color: var(--fb-yellow); }
-
-    @media (max-width: 380px) {
-      .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .hero h1 { font-size: 1.35rem; }
-    }
-  </style>
+  <link rel="icon" href="{{ url_for('static', filename='crest.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fb.css') }}">
 </head>
 <body>
 
   <header class="hero">
-    <div class="crest">🟡🔵</div>
+    <img class="crest-img" src="{{ url_for('static', filename='crest.svg') }}" alt="Fenerbahçe arması">
     <h1>FENER<span class="y">BAHÇE</span></h1>
     <div class="season">{{ team.season }}</div>
     <div class="meta">
@@ -246,7 +37,7 @@
     <div class="grid">
       {% for p in group.players %}
       {% set fallback = "https://ui-avatars.com/api/?name=" ~ (p.name|urlencode) ~ "&size=256&background=14213d&color=ffd700&bold=true&font-size=0.4" %}
-      <div class="card">
+      <a class="card" href="{{ url_for('player_detail', player_id=p.id) }}">
         <div class="photo-wrap">
           <span class="number">{{ p.number }}</span>
           <span class="flag">{{ p.country }}</span>
@@ -260,10 +51,26 @@
           <div class="role">{{ p.role }}</div>
           <span class="age">{{ p.age }} yaş</span>
         </div>
-      </div>
+      </a>
       {% endfor %}
     </div>
     {% endfor %}
+
+    <!-- Teknik ekip & yönetim -->
+    <h2 class="section-title">
+      <span>🏆</span>
+      <span>Teknik Ekip &amp; Yönetim</span>
+      <span class="count">{{ staff|length }} kişi</span>
+    </h2>
+    <div class="staff-grid">
+      {% for s in staff %}
+      <div class="staff-card">
+        <div class="emoji">{{ s.country }}</div>
+        <div class="srole">{{ s.role }}</div>
+        <div class="sname">{{ s.name }}</div>
+      </div>
+      {% endfor %}
+    </div>
   </main>
 
   <footer>

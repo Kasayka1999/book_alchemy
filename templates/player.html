@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ p.name }} — {{ team.name }}</title>
+  <link rel="icon" href="{{ url_for('static', filename='crest.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fb.css') }}">
+</head>
+<body>
+
+  {% set fallback = "https://ui-avatars.com/api/?name=" ~ (p.name|urlencode) ~ "&size=256&background=14213d&color=ffd700&bold=true&font-size=0.4" %}
+
+  <div class="detail">
+    <a class="back" href="{{ url_for('squad') }}">← Kadroya dön</a>
+
+    <div class="detail-hero">
+      <img class="big-photo"
+           src="{{ p.photo if p.photo else fallback }}"
+           alt="{{ p.name }}"
+           onerror="this.onerror=null;this.src='{{ fallback }}';">
+      <div>
+        <div class="d-number">#{{ p.number }}</div>
+        <div class="d-name">{{ p.name }} {{ p.country }}</div>
+        <div class="d-role">{{ group }} · {{ p.role }}</div>
+      </div>
+    </div>
+
+    <div class="detail-meta">
+      <div class="meta-box"><b>{{ p.number }}</b><span>Forma No</span></div>
+      <div class="meta-box"><b>{{ p.age }}</b><span>Yaş</span></div>
+      <div class="meta-box"><b>{{ p.country }}</b><span>Uyruk</span></div>
+    </div>
+
+    <h2 class="stats-title">📊 Sezon İstatistikleri</h2>
+    <div class="stat-row">
+      <div class="stat-pill"><b>{{ p.stats.mac }}</b><span>Maç</span></div>
+      <div class="stat-pill"><b>{{ p.stats.gol }}</b><span>Gol</span></div>
+      <div class="stat-pill"><b>{{ p.stats.asist }}</b><span>Asist</span></div>
+    </div>
+    <p style="margin-top:10px;font-size:.72rem;color:#6b7280;text-align:center;">
+      İstatistikler placeholder'dır — gerçek rakamları <code>players.py</code> dosyasından güncelle.
+    </p>
+  </div>
+
+  <footer>
+    <span class="heart">♥</span> ile yapıldı — Sadece Fenerbahçe.
+  </footer>
+
+</body>
+</html>

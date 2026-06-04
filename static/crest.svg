@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Fenerbahçe arması">
+  <defs>
+    <clipPath id="leaf">
+      <path d="M100,38
+               C132,52 154,80 154,112
+               C154,144 128,162 100,162
+               C72,162 46,144 46,112
+               C46,80 68,52 100,38 Z"/>
+    </clipPath>
+    <path id="topArc" d="M 30,100 A 70,70 0 0 1 170,100" fill="none"/>
+    <path id="botArc" d="M 38,108 A 62,62 0 0 0 162,108" fill="none"/>
+  </defs>
+
+  <!-- Outer navy disc + yellow rings -->
+  <circle cx="100" cy="100" r="99" fill="#14213d"/>
+  <circle cx="100" cy="100" r="96" fill="none" stroke="#ffd700" stroke-width="2.5"/>
+  <circle cx="100" cy="100" r="74" fill="#ffffff"/>
+  <circle cx="100" cy="100" r="74" fill="none" stroke="#ffd700" stroke-width="2.5"/>
+
+  <!-- Curved club text -->
+  <text font-family="Georgia, 'Times New Roman', serif" font-weight="700" fill="#ffd700"
+        font-size="17" letter-spacing="2.5" text-anchor="middle">
+    <textPath href="#topArc" startOffset="50%">FENERBAHÇE</textPath>
+  </text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-weight="700" fill="#ffd700"
+        font-size="15" letter-spacing="4" text-anchor="middle">
+    <textPath href="#botArc" startOffset="50%">1907</textPath>
+  </text>
+
+  <!-- Oak-leaf heart emblem with the iconic diagonal colour bands -->
+  <g clip-path="url(#leaf)">
+    <g transform="rotate(45 100 100)">
+      <rect x="-80" y="25"  width="360" height="38" fill="#ffffff"/>
+      <rect x="-80" y="63"  width="360" height="34" fill="#e30613"/>
+      <rect x="-80" y="97"  width="360" height="40" fill="#14213d"/>
+      <rect x="-80" y="137" width="360" height="42" fill="#ffd700"/>
+    </g>
+  </g>
+  <path d="M100,38 C132,52 154,80 154,112 C154,144 128,162 100,162 C72,162 46,144 46,112 C46,80 68,52 100,38 Z"
+        fill="none" stroke="#14213d" stroke-width="3"/>
+</svg>
