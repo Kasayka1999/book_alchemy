@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0a0f1e">
   <title>{{ team.name }} — Güncel Kadro 2025-26</title>
-  <link rel="icon" href="{{ url_for('static', filename='crest.svg') }}">
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/en/2/27/Fenerbah%C3%A7e_SK.png">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fb.css') }}">
 </head>
 <body>
@@ -14,8 +14,9 @@
 <header class="hero">
   <div class="hero-inner">
     <img class="hero-logo"
-         src="{{ url_for('static', filename='crest.svg') }}"
-         alt="Fenerbahçe arması">
+         src="https://upload.wikimedia.org/wikipedia/en/2/27/Fenerbah%C3%A7e_SK.png"
+         alt="Fenerbahçe arması"
+         onerror="this.onerror=null;this.src='{{ url_for('static', filename='crest.svg') }}'">
     <h1 class="hero-title">FENER<span class="y">BAHÇE</span></h1>
     <div class="hero-badges">
       <span class="badge badge-gold">{{ team.season }} Sezonu</span>
